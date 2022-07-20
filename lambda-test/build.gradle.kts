@@ -21,8 +21,8 @@ tasks.getByName<Test>("test") {
 val printContents: (Project) -> Unit by rootProject.extra
 val getContents: (Project) -> Set<String> by rootProject.extra
 
-val addElementNoProjectExtScope: (Project) -> Unit by rootProject.extra
-val addElementNoProjectAllScope: (Project) -> Unit by extra
+val addElementNoProjectExtScope: (Unit) -> Unit by rootProject.extra
+val addElementNoProjectAllScope: (Unit) -> Unit by extra
 val addElement: (Project) -> Unit by rootProject.extra
 
 //Fake lambda in ext scope will run its code only once and capture project from the scope where it was defined (here root build script)
@@ -35,7 +35,7 @@ printContents(project)
 printContents(rootProject)
 
 //Lambda with no usage of project parameter in the ext scope will capture project from the scope where it was defined (here root build script)
-addElementNoProjectExtScope(project)
+addElementNoProjectExtScope(Unit)
 println("Sizes: project=1 rootProject=3")
 printContents(project)
 printContents(rootProject)
@@ -44,7 +44,7 @@ assert(getContents(rootProject).size == 3)
 
 
 //Lambda with no usage of project parameter but in the allprojects scope will capture project from surrounding scope (from surrounding script)
-addElementNoProjectAllScope(rootProject)
+addElementNoProjectAllScope(Unit)
 println("Sizes: project=2 rootProject=3")
 printContents(project)
 printContents(rootProject)

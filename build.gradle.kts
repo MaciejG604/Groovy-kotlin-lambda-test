@@ -23,13 +23,13 @@ tasks.getByName<Test>("test") {
 allprojects{
     extensions.create("Extension", MyExtension::class.java)
 
-    //passing a no-argument lambda makes the val initialized with lambda result
-    val addElementNoProjectAllScope by extra { project: Project ->
+    val addElementNoProjectAllScope by extra { _: Unit ->
         configure<MyExtension> {
             contents.add("addElementNoProjectAllScope")
         }
     }
 
+    //passing a no-argument lambda makes the val initialized with lambda result
     val addElementFakeLambdaAllScope by extra {
         configure<MyExtension> {
             contents.add("addElementFakeLambdaAllScope")
@@ -37,13 +37,13 @@ allprojects{
     }
 }
 
-//passing a no-argument lambda makes the val initialized with lambda result
-val addElementNoProjectExtScope by extra { project: Project ->
+val addElementNoProjectExtScope by extra { _: Unit ->
     configure<MyExtension> {
         contents.add("addElementNoProjectExtScope")
     }
 }
 
+//passing a no-argument lambda makes the val initialized with lambda result
 val addElementFakeLambdaExtScope by extra {
     configure<MyExtension> {
         contents.add("addElementFakeLambdaExtScope")
