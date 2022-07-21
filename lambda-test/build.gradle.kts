@@ -23,7 +23,7 @@ val getContents: (Project) -> Set<String> by rootProject.extra
 
 val addElementNoProjectExtScope: (Unit) -> Unit by rootProject.extra
 val addElementNoProjectAllScope: (Unit) -> Unit by extra
-val addElement: (Project) -> Unit by rootProject.extra
+val addElementWithProject: (Project) -> Unit by rootProject.extra
 
 //Fake lambda in ext scope will run its code only once and capture project from the scope where it was defined (here root build script)
 assert(getContents(project) == listOf("addElementFakeLambdaExtScope").toSet())
@@ -52,7 +52,7 @@ assert(getContents(project).size == 2)
 assert(getContents(rootProject).size == 3)
 
 //Lambda with project argument configures elements in a specified project only
-addElement(project)
+addElementWithProject(project)
 println("Sizes: project=3 rootProject=3")
 printContents(project)
 printContents(rootProject)
@@ -60,10 +60,9 @@ assert(getContents(project).size == 3)
 assert(getContents(rootProject).size == 3)
 
 //Lambda with project argument configures elements in a specified project only
-addElement(rootProject)
+addElementWithProject(rootProject)
 println("Sizes: project=3 rootProject=4")
 printContents(project)
 printContents(rootProject)
 assert(getContents(project).size == 3)
 assert(getContents(rootProject).size == 4)
-

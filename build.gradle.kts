@@ -29,8 +29,9 @@ allprojects{
         }
     }
 
-    //passing a no-argument lambda makes the val initialized with lambda result
+    //passing a no-argument lambda makes the val EAGERLY initialized with lambda result
     val addElementFakeLambdaAllScope by extra {
+        println("Evaluated FakeLambdaAllScope for ${project.name}")
         configure<MyExtension> {
             contents.add("addElementFakeLambdaAllScope")
         }
@@ -43,14 +44,15 @@ val addElementNoProjectExtScope by extra { _: Unit ->
     }
 }
 
-//passing a no-argument lambda makes the val initialized with lambda result
+//passing a no-argument lambda makes the val EAGERLY initialized with lambda result
 val addElementFakeLambdaExtScope by extra {
+    println("Evaluated FakeLambdaExtScope for ${project.name}")
     configure<MyExtension> {
         contents.add("addElementFakeLambdaExtScope")
     }
 }
 
-val addElement by extra { project: Project ->
+val addElementWithProject by extra { project: Project ->
     project.configure<MyExtension> {
         contents.add("addElement")
     }
